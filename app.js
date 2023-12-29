@@ -36,7 +36,7 @@ const connectionOptions  = {
     database: "userdb_fpln",
     password: "1nA0b2JWx3r61dowfIBHjJ0dkiWCWOuM",
     port: 5432,
-    connectionString: process.env.,
+    connectionString: process.env.URL + "?sslmode=require",
 };
 // Set up the database connection
 const db = pgp(connectionOptions);
