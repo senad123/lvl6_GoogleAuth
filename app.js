@@ -1,4 +1,5 @@
-import 'dotenv/config'; //or using ES6?
+import dotenv from 'dotenv';
+
 import express from "express";
 import bodyParser from "body-parser";
 import pgPromise  from 'pg-promise';
@@ -9,7 +10,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 //import bcrypt from 'bcrypt';
 
- 
+ dotenv.config();
 const app = express(); 
 const port = 3000;
 app.use(express.static("public"));
