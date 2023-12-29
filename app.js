@@ -12,7 +12,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
  dotenv.config();
 const app = express(); 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json());
