@@ -37,7 +37,9 @@ const connectionOptions = {
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
+  app:process.env.APP,
   port: process.env.DB_PORT || 5432,
+
   ssl: { rejectUnauthorized: false } // Adjust as needed for your environment
 
 };
