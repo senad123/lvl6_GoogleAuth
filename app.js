@@ -44,7 +44,7 @@ const connectionOptions = {
 
 };
 // Set up the database connection
-const db = pgp({connectionOptions, application_name: 'lvl6_GoogleAuth'});
+const db = pgp({...connectionOptions, application_name: 'lvl6_GoogleAuth'});
 
 db.connect()
   .then(obj => {
