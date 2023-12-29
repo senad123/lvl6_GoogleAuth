@@ -44,6 +44,14 @@ const connectionOptions = {
 // Set up the database connection
 const db = pgp(connectionOptions);
 
+db.connect()
+  .then(obj => {
+    obj.done(); // success
+  })
+  .catch(error => {
+    console.error('Error connecting to the database:', error.message || error);
+  });
+
 // Set up LocalStrategy for passport
 passport.use(
     new LocalStrategy((username, password, done) => {
