@@ -54,15 +54,15 @@ db.connect()
     console.error('Error connecting to the database:', error.message || error);
   });
 
-// Set the application name
-db.connect({ direct: true, application_name: 'lvl6_GoogleAuth'})
-  .then(obj => {
-    // Your database connection logic here
-    obj.done();
-  })
-  .catch(error => {
-    console.error('Error connecting to the database:', error.message || error);
-  });
+// // Set the application name
+// db.connect({ direct: true, application_name: 'lvl6_GoogleAuth'})
+//   .then(obj => {
+//     // Your database connection logic here
+//     obj.done();
+//   })
+//   .catch(error => {
+//     console.error('Error connecting to the database:', error.message || error);
+//   });
 
 // Set up LocalStrategy for passport
 passport.use(
