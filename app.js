@@ -31,12 +31,15 @@ app.use(passport.session());//passport koristi session
 const pgp = pgPromise();
 // Connection string with your PostgreSQL database details
 const connectionOptions  = { 
-    user: "userdb_fpln_user",
-    host: "dpg-cm794cvqd2ns73f277v0-a",
-    database: "userdb_fpln",
-    password: "1nA0b2JWx3r61dowfIBHjJ0dkiWCWOuM",
-    port: 5432,
-    connectionString: process.env.URL + "?sslmode=require",
+ // Connection options for PostgreSQL
+const connectionOptions = {
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT || 5432,
+  ssl: { rejectUnauthorized: false } // Adjust as needed for your environment
+
 };
 // Set up the database connection
 const db = pgp(connectionOptions);
