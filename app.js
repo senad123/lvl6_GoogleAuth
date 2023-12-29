@@ -30,7 +30,6 @@ app.use(passport.session());//passport koristi session
 // Create an instance of pg-promise
 const pgp = pgPromise();
 // Connection string with your PostgreSQL database details
-const connectionOptions  = { 
  // Connection options for PostgreSQL
 const connectionOptions = {
   user: process.env.DB_USER,
