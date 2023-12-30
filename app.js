@@ -97,19 +97,6 @@ passport.use(
   })
 );
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await db.oneOrNone("SELECT * FROM users WHERE id = $1", id);
-    return done(null, user);
-  } catch (err) {
-    return done(err);
-  }
-});
-
 //GOOGLE OAUTH
 passport.use(
   new GoogleStrategy(
@@ -145,6 +132,19 @@ passport.use(
     }
   )
 );
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await db.oneOrNone("SELECT * FROM users WHERE id = $1", id);
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+});
 
 app.get("/secrets", (req, res) => {
   if (req.isAuthenticated()) {
