@@ -55,7 +55,7 @@ db.connect()
     console.error("Error connecting to the database:", error.message || error);
   });
 
-const setId = 0;
+let setId = 0;
 
 // // Set the application name
 // db.connect({ direct: true, application_name: 'lvl6_GoogleAuth'})
@@ -122,7 +122,7 @@ passport.use(
           return cb(null, user);
         } else {
           // User doesn't exist, create a new user
-          const newId = setId++;
+          let newId = setId++;
           const newUser = await db.one(
             "INSERT INTO users (id, googleId) VALUES ($1,$2) RETURNING *",
             [newId, profile.id]
