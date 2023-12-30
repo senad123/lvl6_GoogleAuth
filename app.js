@@ -104,7 +104,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await db.oneOrNone(
-      "SELECT * FROM users WHERE googleId = $1",
+      "SELECT * FROM dbuser_bckp WHERE id = $1",
       id
     );
     return done(null, user);
