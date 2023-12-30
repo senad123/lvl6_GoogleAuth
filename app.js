@@ -57,6 +57,8 @@ db.connect()
 
 let setId = 0;
 let newId = setId++;
+let localId = 1000;
+let newLocal = localId++;
 
 // // Set the application name
 // db.connect({ direct: true, application_name: 'lvl6_GoogleAuth'})
@@ -205,8 +207,8 @@ app.post("/register", async (req, res) => {
 
     // Insert the new user into the database
     const newUser = await db.one(
-      "INSERT INTO users (id, email, password) VALUES ($1, $2,$3) RETURNING *",
-      [newId, username, password]
+      "INSERT INTO users (id, email, password) VALUES ($1,$2,$3) RETURNING *",
+      [newLocal, username, password]
     );
 
     // Manually authenticate the user after successful registration
