@@ -55,10 +55,6 @@ db.connect()
     console.error("Error connecting to the database:", error.message || error);
   });
 
-let setId = 0;
-
-let localId = 1000;
-
 // // Set the application name
 // db.connect({ direct: true, application_name: 'lvl6_GoogleAuth'})
 //   .then(obj => {
@@ -124,10 +120,10 @@ passport.use(
           return cb(null, user);
         } else {
           // User doesn't exist, create a new user
-          let newId = setId++;
+
           const newUser = await db.one(
-            "INSERT INTO users (id, googleId) VALUES ($1,$2) RETURNING *",
-            [newId, profile.id]
+            "INSERT INTO users (googleId) VALUES ($1) RETURNING *",
+            [profile.id]
           );
           return cb(null, newUser);
         }
@@ -204,10 +200,9 @@ app.post("/register", async (req, res) => {
     //const hashedPassword = await bcrypt.hash(userPassword, saltRounds);
     // Store 'hashedPassword' in the database
 
-    let newLocal = localId++;
     // Insert the new user into the database
     const newUser = await db.one(
-      "INSERT INTO users (id, email, password) VALUES ($1,$2,$3) RETURNING *",
+      "INSERT INTO users (email, password) VALUES ($1,$2) RETURNING *",
       [newLocal, username, password]
     );
 
