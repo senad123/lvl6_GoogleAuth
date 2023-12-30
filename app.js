@@ -67,7 +67,7 @@ db.connect()
 // Set up LocalStrategy for passport
 passport.use(
     new LocalStrategy((username, password, done) => {
-      db.oneOrNone('SELECT * FROM users WHERE email = $1', [username], (err, result) => {
+      db.oneOrNone('SELECT * FROM dbuser_bckp WHERE email = $1', [username], (err, result) => {
         if (err) {
           return done(err);
         }
@@ -101,7 +101,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', id);
+        const user = await db.oneOrNone('SELECT * FROM dbuser_bckp WHERE id = $1', id);
         return done(null, user);
     } catch (err) {
         return done(err);
@@ -121,14 +121,14 @@ passport.use(new GoogleStrategy({
     console.log(profile);
     try {
       // Try to find the user by googleId
-      const user = await db.oneOrNone('SELECT * FROM users WHERE googleId = $1', [profile.id]);
+      const user = await db.oneOrNone('SELECT * FROM dbuser_bckp WHERE googleId = $1', [profile.id]);
 
       if (user) {
         // User already exists, return the user
         return cb(null, user);
       } else {
         // User doesn't exist, create a new user
-        const newUser = await db.one('INSERT INTO users (googleId) VALUES ($1) RETURNING *', [profile.id]);
+        const newUser = await db.one('INSERT INTO dbuser_bckp (googleId) VALUES ($1) RETURNING *', [profile.id]);
         return cb(null, newUser);
       }
     } catch (err) {
@@ -176,7 +176,7 @@ app.post('/register', async (req, res) => {
     const {username, password } = req.body;
     try {
         // Check if the username is already taken
-        const existingUser = await db.oneOrNone('SELECT * FROM users WHERE (email) = $1', username);
+        const existingUser = await db.oneOrNone('SELECT * FROM dbuser_bckp WHERE (email) = $1', username);
         if (existingUser) {
             return res.status(400).json({ message: 'Email already taken.' });
         }
@@ -186,7 +186,7 @@ app.post('/register', async (req, res) => {
         // Store 'hashedPassword' in the database
 
         // Insert the new user into the database
-        const newUser = await db.one('INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *', [username, password]);
+        const newUser = await db.one('INSERT INTO dbuser_bckp (email, password) VALUES ($1, $2) RETURNING *', [username, password]);
 
         // Manually authenticate the user after successful registration
         req.login(newUser, err => {
