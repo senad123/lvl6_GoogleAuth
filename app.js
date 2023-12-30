@@ -56,6 +56,7 @@ db.connect()
   });
 
 let setId = 0;
+let newId = setId++;
 
 // // Set the application name
 // db.connect({ direct: true, application_name: 'lvl6_GoogleAuth'})
@@ -122,7 +123,7 @@ passport.use(
           return cb(null, user);
         } else {
           // User doesn't exist, create a new user
-          let newId = setId++;
+
           const newUser = await db.one(
             "INSERT INTO users (id, googleId) VALUES ($1,$2) RETURNING *",
             [newId, profile.id]
@@ -204,8 +205,8 @@ app.post("/register", async (req, res) => {
 
     // Insert the new user into the database
     const newUser = await db.one(
-      "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
-      [username, password]
+      "INSERT INTO users (id, email, password) VALUES ($1, $2,$3) RETURNING *",
+      [newId, username, password]
     );
 
     // Manually authenticate the user after successful registration
