@@ -101,7 +101,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        const user = await db.oneOrNone('SELECT * FROM dbuser_bckp WHERE id = $1', id);
+        const user = await db.oneOrNone('SELECT * FROM dbuser_bckp WHERE googleId = $1', id);
         return done(null, user);
     } catch (err) {
         return done(err);
