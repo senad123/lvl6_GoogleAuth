@@ -203,7 +203,7 @@ app.post("/register", async (req, res) => {
     // Insert the new user into the database
     const newUser = await db.one(
       "INSERT INTO users (email, password) VALUES ($1,$2) RETURNING *",
-      [newLocal, username, password]
+      [username, password]
     );
 
     // Manually authenticate the user after successful registration
