@@ -55,7 +55,7 @@ db.connect()
     console.error("Error connecting to the database:", error.message || error);
   });
 
-const setID = 0;
+const setId = 0;
 
 // // Set the application name
 // db.connect({ direct: true, application_name: 'lvl6_GoogleAuth'})
