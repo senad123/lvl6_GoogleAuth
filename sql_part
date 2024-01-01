@@ -1,0 +1,5 @@
+CREATE TABLE secrets (
+	id serial primary KEY,
+	secret TEXT,
+	user_id INTEGER REFERENCES users(id)
+);
