@@ -147,12 +147,16 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.get("/secrets", (req, res) => {
+app.get("/secrets",async(req,res)=>{
   if (req.isAuthenticated()) {
-    return res.render("secrets");
+    const result = await db.query('SELECT secret from secrets');
+    const allSecret = result.map((item)=>item.secret);
+    
+    console.log(allSecret);
+    return res.render("secrets",{secrets:allSecret});
   }
-  res.redirect("/login");
-});
+  res.redirect('/login');
+})
 
 app.get("/", (req, res) => {
   res.render("home.ejs");
@@ -253,6 +257,29 @@ app.get("/logout", function (req, res, next) {
     res.redirect("/");
   });
 });
+
+app.get("/submit",  (req,res)=>{
+  if (req.isAuthenticated()) {
+    return res.render("submit");
+  }
+
+
+  });
+
+app.post("/submit", async function(req,res){
+  const submitSecret = req.body.secret;
+  const userId = req.user.id;
+
+// const findUser = await db.oneOrNone('SELECT id FROM users WHERE (id) = $1', [userId]);
+ // console.log(findUser.id);
+
+  await db.one('INSERT INTO secrets (secret, user_id) VALUES ($1,$2) RETURNING *', [submitSecret,userId]);
+
+  res.redirect('/secrets');
+
+
+
+})
 
 //from passport
 // app.post('/login',
